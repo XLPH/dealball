@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main.HomeActivity">
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unable"/>
+
+    <com.chaychan.library.BottomBarLayout
+        android:id="@+id/bottom_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.20"
+        app:smoothScroll="true"
+       >
+        <com.chaychan.library.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:iconNormal="@drawable/normal_index"
+            app:iconSelected="@drawable/select_index"
+            android:layout_marginTop="1dp"
+            app:itemText="首页"
+            app:textColorNormal="#545454"
+            app:textColorSelected="#FF6600"
+            app:iconWidth="35dp"
+            app:iconHeight="35dp"
+            >
+
+        </com.chaychan.library.BottomBarItem>
+
+        <com.chaychan.library.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:iconNormal="@drawable/normal_course"
+            app:iconSelected="@drawable/select_course"
+            app:itemText="球场"
+            app:textColorNormal="#545454"
+            app:textColorSelected="#FF6600"
+            app:iconWidth="35dp"
+            app:iconHeight="35dp"
+            android:layout_marginTop="1dp"
+            >
+
+        </com.chaychan.library.BottomBarItem>
+
+        <com.chaychan.library.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:iconNormal="@drawable/select_plus"
+            app:iconSelected="@drawable/select_plus"
+            app:textColorNormal="#545454"
+            app:textColorSelected="#FF6600"
+            app:iconWidth="65dp"
+            app:iconHeight="45dp"
+            android:layout_marginTop="10dp"
+            >
+
+        </com.chaychan.library.BottomBarItem>
+
+
+        <com.chaychan.library.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:iconNormal="@drawable/normal_equipment"
+            app:iconSelected="@drawable/select_equipment"
+            app:itemText="装备"
+            app:textColorNormal="#545454"
+            app:textColorSelected="#FF6600"
+            app:iconWidth="35dp"
+            app:iconHeight="35dp"
+            android:layout_marginTop="1dp"
+            >
+
+        </com.chaychan.library.BottomBarItem>
+
+        <com.chaychan.library.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:iconNormal="@drawable/normal_mine"
+            app:iconSelected="@drawable/select_mine"
+            app:itemText="我的"
+            app:textColorNormal="#545454"
+            app:textColorSelected="#FF6600"
+            app:iconWidth="35dp"
+            app:iconHeight="35dp"
+            android:layout_marginTop="1dp"
+            >
+
+        </com.chaychan.library.BottomBarItem>
+
+    </com.chaychan.library.BottomBarLayout>
+
+</LinearLayout>

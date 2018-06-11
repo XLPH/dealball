@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>         <!-- 填充的颜色-->
+            <corners android:radius="7dp"/>
+            <stroke android:width="2dp" android:color="@color/button"/>    <!-- 描边-->
+            <padding android:left="1dp" android:bottom="1dp" android:right="1dp" android:top="1dp"/>
+        </shape>
+
+    </item>
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+            <corners android:radius="7dp"/>
+            <stroke android:width="2dp" android:color="@color/depress"/>
+            <padding android:left="1dp" android:bottom="1dp" android:right="1dp" android:top="1dp"/>
+        </shape>
+
+    </item>
+
+</selector>

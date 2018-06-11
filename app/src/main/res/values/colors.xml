@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF6600</color>
+    <color name="colorPrimaryDark">#FF6633</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="unable">#cccccc</color>
+    <color name="editText">#CCCCCC</color>
+    <color name="button">#FF6600</color>
+    <color name="depress">#FF6633</color>
+</resources>
