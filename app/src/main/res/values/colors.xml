@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF6600</color>
-    <color name="colorPrimaryDark">#FF6633</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#e25e3f</color>
+    <color name="colorPrimaryDark">#e25e3f</color>
+    <color name="colorAccent">#e25e3f</color>
     <color name="unable">#cccccc</color>
     <color name="editText">#CCCCCC</color>
-    <color name="button">#FF6600</color>
-    <color name="depress">#FF6633</color>
+    <color name="colorText">#ffffff</color>
+    <color name="text_usually">#260f0f</color>
+    <color name="text_pre">#707070</color>
+    <color name="button">#e25e3f</color>
+    <color name="depress">#e25e3f</color>
+    <color name="loading">#cccccc</color>
 </resources>

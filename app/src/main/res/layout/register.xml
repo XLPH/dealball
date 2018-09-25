@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/editText"
-    android:orientation="vertical">
-    <include layout="@layout/title"/>
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/editText"
+        android:orientation="vertical">
+
+    <include layout="@layout/title_arrow"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -143,6 +151,18 @@
     </LinearLayout>
 
     <Button
+        android:visibility="gone"
+        android:id="@+id/btn_confirm"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:background="@drawable/loginbutton"
+        android:layout_marginTop="10dp"
+        android:text="验证手机验证码"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <Button
         android:id="@+id/btn_register"
         android:layout_width="350dp"
         android:layout_height="45dp"
@@ -163,10 +183,7 @@
         android:text="已有账号，去登录"
         android:textColor="@color/white"
         android:textSize="20sp" />
-
-
-
-
-
-
 </LinearLayout>
+    <include layout="@layout/loading"/>
+
+</RelativeLayout>

@@ -1,7 +1,9 @@
 package com.example.dealball.main.course;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,11 @@ public class CourseFragment extends Fragment {
 
         TextView title = courseView.findViewById(R.id.tv_title);
         title.setText("球场");
+
+        TabLayout course_tab = courseView.findViewById(R.id.course_tab);
+        ViewPager course_viewpager = courseView.findViewById(R.id.course_viewpager);
+        course_viewpager.setAdapter(new CourseTabAdapter(getChildFragmentManager()));
+        course_tab.setupWithViewPager(course_viewpager);
 
         return courseView;
     }

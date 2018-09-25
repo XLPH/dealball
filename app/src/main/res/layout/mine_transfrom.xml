@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:background="@drawable/draw">
-    <ImageView
-        android:id="@+id/mine_iv"
-        android:layout_width="125dp"
-        android:layout_height="123dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="25dp"
-        android:background="@drawable/mine_image" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/my_user_photo"
+        android:padding="15dp"
+        android:layout_width="160dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:src="@drawable/mine_image"
+        />
 
     <ImageView
         android:id="@+id/sex"
@@ -34,7 +34,7 @@
         android:layout_marginRight="100dp"
         android:text="街球王子"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/site"
@@ -67,7 +67,7 @@
         android:layout_marginRight="30dp"
         android:text="球龄"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
     <TextView
         android:id="@+id/ball_age"
         android:layout_width="wrap_content"
@@ -79,10 +79,11 @@
         android:layout_marginRight="12dp"
         android:text="5"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 
     <TextView
+        android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -91,7 +92,7 @@
         android:layout_marginRight="85dp"
         android:text="湖南长沙"
         android:textColor="#666666"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 
     <TextView
@@ -100,11 +101,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="42dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginRight="173dp"
         android:text="0"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/mine_attack"
@@ -115,7 +116,7 @@
         android:layout_marginRight="113dp"
         android:text="0"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/mine_defense"
@@ -126,18 +127,18 @@
         android:layout_marginRight="49dp"
         android:text="0"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/mine_watch_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/mine_iv"
+        android:layout_alignBottom="@+id/my_user_photo"
         android:layout_alignParentRight="true"
         android:layout_marginRight="158dp"
         android:text="关注"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/mine_attack_word"
@@ -148,7 +149,7 @@
         android:layout_marginRight="100dp"
         android:text="进攻"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/mine_defense_word"
@@ -159,7 +160,7 @@
         android:layout_marginRight="37dp"
         android:text="防守"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 
 
