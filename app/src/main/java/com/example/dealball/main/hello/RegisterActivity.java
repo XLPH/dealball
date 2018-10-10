@@ -81,8 +81,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener ,
                 String password=password_et.getText().toString().trim();
                 String psw2=confirm_password_et.getText().toString().trim();
                 String param=auth_code_et.getText().toString().trim();
-               // presenter.confirmCode(phone, password,psw2,param);
-                presenter.register(phone, password,psw2,param);
+                presenter.confirmCode(phone, password,psw2,param);
+               // presenter.register(phone, password,psw2,param);
 
                 break;
             case R.id.btn_confirm:
@@ -134,9 +134,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener ,
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Looper.prepare();
-                Toast.makeText(getApplicationContext(),meg,Toast.LENGTH_LONG).show();
-                Looper.loop();
+                Utility.makeToast(meg,Toast.LENGTH_SHORT);
             }
         });
 

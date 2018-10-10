@@ -14,6 +14,6 @@ public interface HelloContact {
         void sendCode(String phone);
         void confirmCode(String phone, String password, String psw2,String param);
         void register(String phone, String password, String psw2,String param);
-        void getUser(int id);
+        void getUser(int id, String token);
     }
 }

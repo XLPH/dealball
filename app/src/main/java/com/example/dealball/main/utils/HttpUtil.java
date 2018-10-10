@@ -4,6 +4,7 @@ import android.Manifest;
 import android.support.annotation.RequiresPermission;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Callback;
 import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -32,9 +35,35 @@ public class HttpUtil {
     private HttpUtil() {
 
         client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
+                .cookieJar(new CookieJar() {
+                    @Override
+                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+
+                        cookieStore.put(url.host(),cookies);
+                        System.out.println("cookies url:"+ url.toString());
+                        for(Cookie cookie : cookies){
+                            System.out.println("cookies:" + cookie.toString());
+                            System.out.println("cookies name:"+ cookie.name());
+                            System.out.println("cookies path:"+ cookie.path());
+                            System.out.println("cookies value:"+ cookie.value());
+                            JSESSIONID = cookie.value();
+
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public List<Cookie> loadForRequest(HttpUrl url) {
+                        List<Cookie> cookies = cookieStore.get(url.host());
+                        return cookies != null ? cookies : new ArrayList<Cookie>();
+
+                    }
+                })
                 .build();
 
 
@@ -98,26 +127,36 @@ public class HttpUtil {
             Request request = new Request.Builder()
                     .url(url)
                     .post(buildBody(params))
-                    .addHeader("JSESSIONID",JSESSIONID)
+                    .addHeader("JESESSIONID",JSESSIONID)
                     .build();
-            //System.out.println("******"+request.header(JSESSIONID));
+            System.out.println("******"+request.header(JSESSIONID));
+            //JESESSIONID
 
             getInstance().client.newCall(request).enqueue(callback);
         }
 
     @RequiresPermission(Manifest.permission.INTERNET)
     public static void myPost(String url, String str1, String str2, Callback callback) {
-
-        System.out.println("hihihhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody(str1, str2))
                 .build();
 
         getInstance().client.newCall(request).enqueue(callback);
-        System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     }
+
+    @RequiresPermission(Manifest.permission.INTERNET)
+    public static void myPost(String url, Callback callback) {  //以get方式提交数据
+
+        Request request = new Request.Builder()
+                .url(url)
+                //.addHeader("JESESSIONID",JSESSIONID)
+                .build();
+
+        getInstance().client.newCall(request).enqueue(callback);
+    }
+
+
 
     @RequiresPermission(Manifest.permission.INTERNET)
     public static void post(String url, Map<String, String> params, Map<String, File> files, Callback callback) {
@@ -143,6 +182,7 @@ public class HttpUtil {
         return builder.build();
 
     }
+
 
     private static RequestBody buildBody(Map<String, String> params, Map<String, File> files) {
         MultipartBody.Builder builder = new MultipartBody.Builder();

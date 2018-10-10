@@ -110,9 +110,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Looper.prepare();
+                Utility.makeToast(meg,Toast.LENGTH_SHORT);
+               /* Looper.prepare();
                 Toast.makeText(getApplicationContext(), meg, Toast.LENGTH_LONG).show();
-                Looper.loop();
+                Looper.loop();*/
             }
         });
 

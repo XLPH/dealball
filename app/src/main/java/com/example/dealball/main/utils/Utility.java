@@ -1,11 +1,8 @@
 package com.example.dealball.main.utils;
-
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.lang.annotation.Retention;
@@ -37,9 +34,21 @@ public class Utility {
     @Nullable
     public synchronized static int getUserById() {
         SharedPreferences sp = MyApplication.getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        int id=sp.getInt("id", -1);
+        int id=sp.getInt("id", 0);
         System.out.println("id"+id);
         return id;
 
+    }
+
+    public synchronized static void setToken(String token) {
+        SharedPreferences.Editor editor = MyApplication.getContext().getSharedPreferences("isLogged", Context.MODE_PRIVATE).edit();
+        editor.putString("token", token);
+        editor.apply();
+    }
+
+    @Nullable
+    public synchronized static String getToken() {
+        SharedPreferences pref = MyApplication.getContext().getSharedPreferences("isLogged", Context.MODE_PRIVATE);
+        return pref.getString("token", "");
     }
 }

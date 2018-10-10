@@ -16,8 +16,19 @@ public class HelloPresenter implements HelloContact.Presenter{
         model=HelloModel.getInstance();
     }
     @Override
-    public void getUser(int id){
+    public void getUser(int id, String token){
+        model.getUser(id,token, new Back() {
+            @Override
+            public void success(Bundle bundle) {
+                int id = bundle.getInt("id");
+                System.out.print("获取用户信息id:"+id);
+            }
 
+            @Override
+            public void failure(String meg) {
+                updateFailureView(meg);
+            }
+        });
 
     }
 
@@ -32,20 +43,17 @@ public class HelloPresenter implements HelloContact.Presenter{
             public void success(@Nullable Bundle bundle) {
 
                 view.showToast("登录成功");
-               // int code=bundle.getInt("code");
-
+                int code=bundle.getInt("code");
                 int id=bundle.getInt("id");     //获取登录传过来的用户id，唯一标识用户
-
-               /* if(code==0){        //如果登录成功，把id存储起来
-
-                }*/
-               if(id != -1){
-                   System.out.print("登录成功返回了llllllllllllllllllllllllllll");
-                   //Utility.setUserById(id);
-                   view.next();
-               }
-
-
+                String token = bundle.getString("token");
+                System.out.print("code :"+code+" id:"+id);
+                //String token = Utility.getToken();
+                Utility.setToken(token);
+                if(code==0){        //如果登录成功，把id存储起来
+                    Utility.setUserById(id);
+                    getUser(id, token);
+                    view.next();
+                }
             }
 
             @Override
@@ -62,8 +70,8 @@ public class HelloPresenter implements HelloContact.Presenter{
 
             @Override
             public void  success(@Nullable Bundle bundle) {
-                //view.showToast("发送验证码成功,返回码是"+bundle.getInt("code"));
-
+                //String token = bundle.getString("token");
+               // Utility.setToken(token);
             }
 
             @Override
@@ -97,8 +105,6 @@ public class HelloPresenter implements HelloContact.Presenter{
                 if(code==0){
                     register(phone,password,psw2,param);
                 }
-
-
             }
             @Override
             public void failure(String meg) {
@@ -111,6 +117,7 @@ public class HelloPresenter implements HelloContact.Presenter{
     @Override
     public void register(final String phone, final String password, String psw2, String param) {
 
+       // view.showProgress();
         model.register(phone, password,new Back() {
             @Override
             public void success( Bundle bundle) {
@@ -118,15 +125,15 @@ public class HelloPresenter implements HelloContact.Presenter{
                 System.out.print("注册了lllllllllllllllllllllllllllllll");
                 view.showToast("注册成功");
 
-                int userId = bundle.getInt("userId");
+               /* int userId = bundle.getInt("userId");
                 if(userId != -1){
                     login(phone, password);
-                }
+                }*/
 
-              /*  int code=bundle.getInt("code");
+                int code=bundle.getInt("code");
                 if(code==0){
                     login(phone,password);
-                }*/
+                }
 
             }
 
@@ -138,7 +145,7 @@ public class HelloPresenter implements HelloContact.Presenter{
 
     }
     private void updateFailureView(String meg) {
-
-
+        view.hideProgress();
+        view.showToast(meg);
     }
 }

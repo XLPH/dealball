@@ -2,15 +2,18 @@ package com.example.dealball.main.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.Arrays;
+
 //implements Parcelable
 public class MyInfoBean {
-    private int id;
+    private int userId;
+    private String phone;
     //private String portrait;
     private String nickname;
     private String sex;
     private String sign;
 
-    private String phone;
     private float attack;
     private float defensive;
     private int ballYear;
@@ -19,12 +22,12 @@ public class MyInfoBean {
 
     private PhysicalData physicalData;
 
-    public PhysicalData getPhysicalData() {
-        return physicalData;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setPhysicalData(PhysicalData physicalData) {
-        this.physicalData = physicalData;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPhone() {
@@ -35,12 +38,36 @@ public class MyInfoBean {
         this.phone = phone;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
     public float getAttack() {
         return attack;
     }
 
-    public void setAttack(float attact) {
-        this.attack = attact;
+    public void setAttack(float attack) {
+        this.attack = attack;
     }
 
     public float getDefensive() {
@@ -67,8 +94,6 @@ public class MyInfoBean {
         this.rank = rank;
     }
 
-
-
     public byte[] getAvatar() {
         return avatar;
     }
@@ -77,51 +102,31 @@ public class MyInfoBean {
         this.avatar = avatar;
     }
 
-    public MyInfoBean(){
-
+    public PhysicalData getPhysicalData() {
+        return physicalData;
     }
 
-    public int getId() {
-        return id;
+    public void setPhysicalData(PhysicalData physicalData) {
+        this.physicalData = physicalData;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "MyInfoBean{" +
+                "userId=" + userId +
+                ", phone='" + phone + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", sex='" + sex + '\'' +
+                ", sign='" + sign + '\'' +
+                ", attack=" + attack +
+                ", defensive=" + defensive +
+                ", ballYear=" + ballYear +
+                ", rank=" + rank +
+                ", avatar=" + Arrays.toString(avatar) +
+                ", physicalData=" + physicalData +
+                '}';
     }
-
-   /*public String getPortrait() {
-        return portrait;
-    }
-
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
-    }*/
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-  /*  public static Creator<MyInfoBean> getCREATOR() {
+    /*  public static Creator<MyInfoBean> getCREATOR() {
         return CREATOR;
     }
 

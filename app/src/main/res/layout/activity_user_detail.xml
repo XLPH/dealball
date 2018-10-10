@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/activity_user_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_curry">
+
+    <include layout="@layout/title_arrow"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:background="#d3c5bfbf"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/girl_user_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/girl_photo"
+                        />
+
+                    <RelativeLayout
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_username_detail"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="篮球女神"
+                            android:textColor="@color/text_usually"
+                            android:textSize="16dp"
+                            android:layout_marginLeft="8dp"
+                            />
+
+                        <ImageView
+                            android:layout_toLeftOf="@id/tv_username_detail"
+                            android:id="@+id/user_sex_iv"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@mipmap/sex_girl"
+                            />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:text="21岁 湖南 长沙"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/text_pre"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp">
+                </View>
+
+                <LinearLayout
+                    android:background="#0be2d9d9"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/text_style"
+                        android:text="34"
+                        android:id="@+id/tv_gz_num" />
+
+                    <TextView
+                        style="@style/text_style"
+                        android:text="76"
+                        android:id="@+id/tv_attack_detail" />
+                    <TextView
+                        style="@style/text_style"
+                        android:text="68"
+                        android:id="@+id/tv_defensive_detail" />
+
+                    <TextView
+                        style="@style/text_style"
+                        android:text="4"
+                        android:id="@+id/tv_detail_age" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="#0be2d9d9"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/text_style"
+                        android:text="关注"
+                        />
+                    <TextView
+                        style="@style/text_style"
+                        android:text="进攻"
+                        />
+
+                    <TextView
+                        style="@style/text_style"
+                        android:text="防守"
+                        android:id="@+id/textView2" />
+
+                    <TextView
+                        style="@style/text_style"
+                        android:text="球龄"
+                        android:id="@+id/user_age" />
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/text_pre"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp">
+                </View>
+
+                <TextView
+                    android:layout_marginTop="4dp"
+                    style="@style/text_style"
+                    android:text="她的签名"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="5dp"
+                    app:cardBackgroundColor="#93faf9f9"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/text_usually"
+                        android:text="    我奶奶跟着乔丹打球也可以拿6个总冠军。哈哈哈哈...."
+                        android:textSize="16dp"
+                        />
+                </android.support.v7.widget.CardView>
+
+
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" >
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="她的排名："
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16dp"
+                        android:textColor="@color/text_usually"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/text_pre"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp">
+                </View>
+
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" >
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="约球场数："
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16dp"
+                        android:textColor="@color/text_usually"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/text_pre"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp">
+                </View>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="她的发帖"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/text_usually"
+                    />
+
+                <View
+                    android:layout_marginRight="100dp"
+                    android:layout_marginLeft="100dp"
+                    android:background="@color/text_pre"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp">
+                </View>
+                <FrameLayout
+                    android:background="#93faf9f9"
+                    android:id="@+id/user_detail_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </FrameLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#d3ece6e6"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/tv_add_gz"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="加关注"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/colorText"
+            android:background="@drawable/button_second"
+            />
+
+        <View
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@color/text_pre"
+            android:layout_width="1dp"
+            android:layout_height="41dp">
+        </View>
+
+        <TextView
+            android:id="@+id/tv_send_message"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="发消息"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/colorText"
+            android:background="@drawable/button_second"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
