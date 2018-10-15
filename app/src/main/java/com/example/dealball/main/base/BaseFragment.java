@@ -5,7 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.example.dealball.main.bean.IsLogged;
 import com.example.dealball.main.utils.Utility;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by dasu on 2016/9/27.
@@ -25,7 +30,7 @@ public abstract class BaseFragment extends Fragment {
     private boolean isFragmentVisible;
     private boolean isReuseView;
     private boolean isFirstVisible;
-   // private boolean isLogged;
+    private boolean isLog;
     private View rootView;
 
 
@@ -45,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
             onFragmentFirstVisible();
             isFirstVisible = false;
         }
-        if (isVisibleToUser) {
+        if (isLog && isVisibleToUser) {
             onFragmentVisibleChange(true);
             isFragmentVisible = true;
             return;
@@ -60,6 +65,7 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initVariable();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -74,12 +80,35 @@ public abstract class BaseFragment extends Fragment {
                     onFragmentFirstVisible();
                     isFirstVisible = false;
                 }
-                onFragmentVisibleChange(true);
-                isFragmentVisible = true;
-
             }
         }
         super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        System.out.println("onResume");
+        if (isLog) {
+            onFragmentVisibleChange(true);
+            isFragmentVisible = true;
+        }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        System.out.println("onPause");
+        EventBus.getDefault().removeAllStickyEvents();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void IsLoggedBus(IsLogged isLogged){
+        if(isLogged.getName() != null){
+            System.out.println(isLogged.getName());
+                isLog = true;
+        }
     }
 
     @Override
@@ -96,7 +125,7 @@ public abstract class BaseFragment extends Fragment {
     private void initVariable() {
         isFirstVisible = true;
         isFragmentVisible = false;
-       // isLogged = false;
+        isLog = false;
         rootView = null;
         isReuseView = true;
     }

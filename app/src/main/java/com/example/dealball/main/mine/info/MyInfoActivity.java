@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.dealball.R;
 import com.example.dealball.main.hello.LoginBYActivity;
+import com.example.dealball.main.utils.Utility;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,7 +31,8 @@ public class MyInfoActivity extends Activity implements View.OnClickListener {
     private TextView userWeChat;
     private TextView isWeChatBind;
     private  TextView title;
-    private ImageView iv_back;
+    private ImageView arrow;
+    private TextView register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,9 @@ public class MyInfoActivity extends Activity implements View.OnClickListener {
 
     }
     private void initView() {
-        title = findViewById( R.id.title );
-        iv_back = findViewById( R.id.iv_back );
+        title = findViewById( R.id.tv_title);
+        arrow = findViewById( R.id.arrow );
+        register = findViewById(R.id.register);
         changeUserPhoto = findViewById( R.id.change_user_photo );
         civUserHeader = findViewById( R.id.civ_user_header );
         rlUserNick = findViewById( R.id.rl_user_nick );
@@ -62,18 +65,37 @@ public class MyInfoActivity extends Activity implements View.OnClickListener {
 
     private void initData() {
         title.setText("我的资料");
+        register.setText("完成");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        showDetail();
+    }
+
+    private void showDetail() {
+        if (Utility.getMyInfoBean().getNickname() == null){
+            userNickname.setText("YueQiu" + Utility.getUserById());
+        }else {
+            userNickname.setText(Utility.getMyInfoBean().getNickname());
+        }
+        userSex.setText(Utility.getMyInfoBean().getSex());
     }
 
     private void initEvent() {
-        iv_back.setOnClickListener(this);
+        arrow.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
-                finish();
+            case R.id.rl_user_nick:
                 break;
+
+            case R.id.arrow:
+                finish();
+
         }
     }
 }

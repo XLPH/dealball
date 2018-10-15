@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.example.dealball.main.bean.MyInfoBean;
 import com.example.dealball.main.utils.Utility;
+
+import org.litepal.LitePal;
+import org.litepal.LitePalDB;
 
 public class HelloPresenter implements HelloContact.Presenter{
     private HelloContact.View view;
@@ -22,6 +26,12 @@ public class HelloPresenter implements HelloContact.Presenter{
             public void success(Bundle bundle) {
                 int id = bundle.getInt("id");
                 System.out.print("获取用户信息id:"+id);
+
+                MyInfoBean myInfoBean = bundle.getParcelable("myInfoBean");
+                System.out.println(myInfoBean);
+                Utility.setMyInfoBean(myInfoBean);
+                view.next();
+
             }
 
             @Override
@@ -48,11 +58,12 @@ public class HelloPresenter implements HelloContact.Presenter{
                 String token = bundle.getString("token");
                 System.out.print("code :"+code+" id:"+id);
                 //String token = Utility.getToken();
-                Utility.setToken(token);
+//                Utility.setToken(token);
                 if(code==0){        //如果登录成功，把id存储起来
                     Utility.setUserById(id);
+                    LitePal.use(LitePalDB.fromDefault("DealBall" + id));
                     getUser(id, token);
-                    view.next();
+
                 }
             }
 

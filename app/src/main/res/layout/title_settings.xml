@@ -9,7 +9,6 @@
         android:layout_width="25dp"
         android:layout_height="22dp"
         android:layout_marginLeft="5dp"
-
         android:layout_marginBottom="10dp"
         android:background="@mipmap/back_left"
         android:layout_centerVertical="true"

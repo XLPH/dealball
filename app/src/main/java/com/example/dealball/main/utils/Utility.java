@@ -5,8 +5,13 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.example.dealball.main.bean.MyInfoBean;
+
+import org.litepal.crud.DataSupport;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 
 public class Utility {
 
@@ -37,6 +42,21 @@ public class Utility {
         int id=sp.getInt("id", 0);
         System.out.println("id"+id);
         return id;
+
+    }
+    public synchronized static void setMyInfoBean(MyInfoBean myInfoBean) {
+        SharedPreferences.Editor editor = MyApplication.getContext().getSharedPreferences("myInfo", Context.MODE_PRIVATE).edit();
+        editor.putInt("userId", myInfoBean.getUserId());
+        editor.apply();
+        myInfoBean.saveOrUpdate(myInfoBean.getUserId());
+    }
+
+    @Nullable
+    public synchronized static MyInfoBean getMyInfoBean() {
+        SharedPreferences sp = MyApplication.getContext().getSharedPreferences("myInfo", Context.MODE_PRIVATE);
+        int userId = sp.getInt("userId",0);
+        List<MyInfoBean> myInfoBeans = DataSupport.where("userId = ?", String.valueOf(userId) ).find(MyInfoBean.class);
+        return myInfoBeans.get(0);
 
     }
 

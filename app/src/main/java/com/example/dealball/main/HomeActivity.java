@@ -7,6 +7,12 @@ import android.os.Bundle;
 
 import com.chaychan.library.BottomBarLayout;
 import com.example.dealball.R;
+import com.example.dealball.main.bean.IsLogged;
+import com.example.dealball.main.utils.Utility;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -25,4 +31,20 @@ public class HomeActivity extends AppCompatActivity {
         int page=intent.getIntExtra("page",0);
         viewPager.setCurrentItem(page);
     }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onDestroy(){
+//        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+//    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void IsLoggedBus(IsLogged isLogged){
+//
+//    }
 }

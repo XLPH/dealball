@@ -1,6 +1,11 @@
 package com.example.dealball.main.bean;
 
-public class PhysicalData {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.litepal.crud.DataSupport;
+
+public class PhysicalData extends DataSupport implements Parcelable {
     private Integer userId;
     private Double height;
     private Double weight;
@@ -86,4 +91,40 @@ public class PhysicalData {
                 ", isPublic=" + isPublic +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.userId);
+        dest.writeValue(this.height);
+        dest.writeValue(this.weight);
+        dest.writeString(this.userHand);
+        dest.writeValue(this.playPosition);
+        dest.writeValue(this.isPublic);
+    }
+
+    protected PhysicalData(Parcel in) {
+        this.userId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.height = (Double) in.readValue(Double.class.getClassLoader());
+        this.weight = (Double) in.readValue(Double.class.getClassLoader());
+        this.userHand = in.readString();
+        this.playPosition = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isPublic = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    }
+
+    public static final Creator<PhysicalData> CREATOR = new Creator<PhysicalData>() {
+        @Override
+        public PhysicalData createFromParcel(Parcel source) {
+            return new PhysicalData(source);
+        }
+
+        @Override
+        public PhysicalData[] newArray(int size) {
+            return new PhysicalData[size];
+        }
+    };
 }

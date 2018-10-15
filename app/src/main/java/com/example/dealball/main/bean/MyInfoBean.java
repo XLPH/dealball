@@ -3,13 +3,14 @@ package com.example.dealball.main.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.Arrays;
 
-//implements Parcelable
-public class MyInfoBean {
+
+public class MyInfoBean extends DataSupport implements Parcelable{
     private int userId;
     private String phone;
-    //private String portrait;
     private String nickname;
     private String sex;
     private String sign;
@@ -110,6 +111,10 @@ public class MyInfoBean {
         this.physicalData = physicalData;
     }
 
+    public synchronized boolean saveOrUpdate(int userId) {
+        return saveOrUpdate("userId = ?", String.valueOf(userId) );
+    }
+
     @Override
     public String toString() {
         return "MyInfoBean{" +
@@ -126,46 +131,52 @@ public class MyInfoBean {
                 ", physicalData=" + physicalData +
                 '}';
     }
-    /*  public static Creator<MyInfoBean> getCREATOR() {
-        return CREATOR;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {   //序列化
-        parcel.writeInt(id);
-        parcel.writeString(portrait);
-        parcel.writeString(nickname);
-        parcel.writeString(sex);
-        parcel.writeString(sign);
-
-    }
-    protected MyInfoBean(Parcel in) {
-        id=in.readInt();
-        portrait=in.readString();
-        nickname=in.readString();
-        sex=in.readString();
-        sign=in.readString();
-
-    }
-
     @Override
     public int describeContents() {
         return 0;
     }
 
-    public static final Creator<MyInfoBean> CREATOR = new Creator<MyInfoBean>() { //反序列化
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.userId);
+        dest.writeString(this.phone);
+        dest.writeString(this.nickname);
+        dest.writeString(this.sex);
+        dest.writeString(this.sign);
+        dest.writeFloat(this.attack);
+        dest.writeFloat(this.defensive);
+        dest.writeInt(this.ballYear);
+        dest.writeInt(this.rank);
+        dest.writeByteArray(this.avatar);
+        dest.writeParcelable(this.physicalData, flags);
+    }
+
+    public MyInfoBean() {
+    }
+
+    protected MyInfoBean(Parcel in) {
+        this.userId = in.readInt();
+        this.phone = in.readString();
+        this.nickname = in.readString();
+        this.sex = in.readString();
+        this.sign = in.readString();
+        this.attack = in.readFloat();
+        this.defensive = in.readFloat();
+        this.ballYear = in.readInt();
+        this.rank = in.readInt();
+        this.avatar = in.createByteArray();
+        this.physicalData = in.readParcelable(PhysicalData.class.getClassLoader());
+    }
+
+    public static final Creator<MyInfoBean> CREATOR = new Creator<MyInfoBean>() {
         @Override
-        public MyInfoBean createFromParcel(Parcel in) {
-            return new MyInfoBean(in);
+        public MyInfoBean createFromParcel(Parcel source) {
+            return new MyInfoBean(source);
         }
 
         @Override
         public MyInfoBean[] newArray(int size) {
             return new MyInfoBean[size];
         }
-    };*/
-
-
-
-
+    };
 }

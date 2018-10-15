@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#e2dddd">
 
-    <include layout="@layout/title_arrow"/>
+    <include layout="@layout/title_settings"/>
 
     <RelativeLayout
         android:id="@+id/change_user_photo"

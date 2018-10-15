@@ -58,6 +58,7 @@ public class HelloModel {
                 System.out.println("id:"+id);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id",id);
+                bundle.putParcelable("myInfoBean",myInfoBean);
                 back.success(bundle);
 
             }

@@ -15,7 +15,10 @@ import android.widget.Toast;
 
 import com.example.dealball.R;
 import com.example.dealball.main.HomeActivity;
+import com.example.dealball.main.bean.IsLogged;
 import com.example.dealball.main.utils.Utility;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener , HelloContact.View{
     private TextView register;
@@ -74,8 +77,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+
     @Override
     public void next() {
+        EventBus.getDefault().postSticky(IsLogged.MARK);
         Intent intent= new Intent(this,HomeActivity.class);
         intent.putExtra("page",4);
         startActivity(intent);
