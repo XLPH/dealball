@@ -51,15 +51,24 @@ public class HelloModel {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseData = response.body().string();
-                Gson gson = new Gson();
-                MyInfoBean myInfoBean = gson.fromJson(responseData, MyInfoBean.class);
-                System.out.println(myInfoBean.toString());
-                int id = myInfoBean.getUserId();
-                System.out.println("id:"+id);
-                Bundle bundle = new Bundle();
-                bundle.putInt("id",id);
-                bundle.putParcelable("myInfoBean",myInfoBean);
-                back.success(bundle);
+                try {
+                    JSONObject object = new JSONObject(responseData);
+                    System.out.println(responseData);
+                    int code = object.optInt("code");
+                    String information = object.optString("basicInformation");
+                    Gson gson = new Gson();
+                    MyInfoBean myInfoBean = gson.fromJson(information, MyInfoBean.class);
+                    int id = myInfoBean.getUserId();
+                    System.out.println("id:"+id);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id",id);
+                    bundle.putInt("code",code);
+                    bundle.putParcelable("myInfoBean",myInfoBean);
+                    back.success(bundle);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -78,12 +87,9 @@ public class HelloModel {
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     JSONObject object = new JSONObject(response.body().string());
-                    Log.d("login", object.toString());
                     int id = object.optInt("id");
                     int code = object.optInt("code");
                     String token = object.optString("token");
-                    System.out.println("响应登录返回id："+id);
-                    System.out.println("响应登录返回码code："+code);
                     if (code != 0) {
                         back.failure(HttpUtil.getCodeMeg(code));
                         System.out.println("HttpUtil.getCodeMeg(status" + HttpUtil.getCodeMeg(code));

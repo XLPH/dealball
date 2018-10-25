@@ -11,15 +11,15 @@ import java.util.Arrays;
 public class MyInfoBean extends DataSupport implements Parcelable{
     private int userId;
     private String phone;
-    private String nickname;
+    private String nickName;
     private String sex;
-    private String sign;
+    private String signature;
 
     private float attack;
     private float defensive;
     private int ballYear;
-    private int rank;
-    private byte[] avatar;
+    private int ranking;
+    private String avatar;
 
     private PhysicalData physicalData;
 
@@ -39,12 +39,12 @@ public class MyInfoBean extends DataSupport implements Parcelable{
         this.phone = phone;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getSex() {
@@ -55,12 +55,12 @@ public class MyInfoBean extends DataSupport implements Parcelable{
         this.sex = sex;
     }
 
-    public String getSign() {
-        return sign;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setSign(String sign) {
-        this.sign = sign;
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public float getAttack() {
@@ -87,19 +87,19 @@ public class MyInfoBean extends DataSupport implements Parcelable{
         this.ballYear = ballYear;
     }
 
-    public int getRank() {
-        return rank;
+    public int getRanking() {
+        return ranking;
     }
 
-    public void setRank(int rank) {
-        this.rank = rank;
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -120,14 +120,14 @@ public class MyInfoBean extends DataSupport implements Parcelable{
         return "MyInfoBean{" +
                 "userId=" + userId +
                 ", phone='" + phone + '\'' +
-                ", nickname='" + nickname + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", sex='" + sex + '\'' +
-                ", sign='" + sign + '\'' +
+                ", signature='" + signature + '\'' +
                 ", attack=" + attack +
                 ", defensive=" + defensive +
                 ", ballYear=" + ballYear +
-                ", rank=" + rank +
-                ", avatar=" + Arrays.toString(avatar) +
+                ", rank=" + ranking +
+                ", avatar=" + avatar +
                 ", physicalData=" + physicalData +
                 '}';
     }
@@ -140,14 +140,15 @@ public class MyInfoBean extends DataSupport implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.userId);
         dest.writeString(this.phone);
-        dest.writeString(this.nickname);
+        dest.writeString(this.nickName);
         dest.writeString(this.sex);
-        dest.writeString(this.sign);
+        dest.writeString(this.signature);
         dest.writeFloat(this.attack);
         dest.writeFloat(this.defensive);
         dest.writeInt(this.ballYear);
-        dest.writeInt(this.rank);
-        dest.writeByteArray(this.avatar);
+        dest.writeInt(this.ranking);
+        dest.writeString(this.avatar);
+//        dest.writeByteArray(this.avatar);
         dest.writeParcelable(this.physicalData, flags);
     }
 
@@ -157,14 +158,15 @@ public class MyInfoBean extends DataSupport implements Parcelable{
     protected MyInfoBean(Parcel in) {
         this.userId = in.readInt();
         this.phone = in.readString();
-        this.nickname = in.readString();
+        this.nickName = in.readString();
         this.sex = in.readString();
-        this.sign = in.readString();
+        this.signature = in.readString();
         this.attack = in.readFloat();
         this.defensive = in.readFloat();
         this.ballYear = in.readInt();
-        this.rank = in.readInt();
-        this.avatar = in.createByteArray();
+        this.ranking = in.readInt();
+        this.avatar = in.readString();
+//        this.avatar = in.createByteArray();
         this.physicalData = in.readParcelable(PhysicalData.class.getClassLoader());
     }
 

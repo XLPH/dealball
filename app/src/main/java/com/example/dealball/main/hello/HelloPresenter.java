@@ -15,7 +15,7 @@ public class HelloPresenter implements HelloContact.Presenter{
     private HelloModel model;
 
 
-    public HelloPresenter(HelloContact.View view){
+    HelloPresenter(HelloContact.View view){
         this.view=view;
         model=HelloModel.getInstance();
     }
@@ -25,13 +25,14 @@ public class HelloPresenter implements HelloContact.Presenter{
             @Override
             public void success(Bundle bundle) {
                 int id = bundle.getInt("id");
+                int code = bundle.getInt("code");
                 System.out.print("获取用户信息id:"+id);
 
                 MyInfoBean myInfoBean = bundle.getParcelable("myInfoBean");
-                System.out.println(myInfoBean);
-                Utility.setMyInfoBean(myInfoBean);
-                view.next();
-
+                if(code == 0){
+                    Utility.setMyInfoBean(myInfoBean);
+                    view.next();
+                }
             }
 
             @Override
@@ -58,7 +59,7 @@ public class HelloPresenter implements HelloContact.Presenter{
                 String token = bundle.getString("token");
                 System.out.print("code :"+code+" id:"+id);
                 //String token = Utility.getToken();
-//                Utility.setToken(token);
+                Utility.setToken(token);
                 if(code==0){        //如果登录成功，把id存储起来
                     Utility.setUserById(id);
                     LitePal.use(LitePalDB.fromDefault("DealBall" + id));
@@ -132,8 +133,6 @@ public class HelloPresenter implements HelloContact.Presenter{
         model.register(phone, password,new Back() {
             @Override
             public void success( Bundle bundle) {
-
-                System.out.print("注册了lllllllllllllllllllllllllllllll");
                 view.showToast("注册成功");
 
                /* int userId = bundle.getInt("userId");

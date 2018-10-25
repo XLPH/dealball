@@ -13,6 +13,7 @@ public class URLStore {
 
     public static final String USERINFO_GET = "http://47.92.49.26:8080/information/showinformation";
     public static final String USERINFO_UPDATE = "http://47.92.49.26:8080/information/exchangebasic";
+    public static final String GET_BYTES = "http://47.92.49.26:8080/demo/getbytes";
 
     public static final String PUBLISH_POST = "http://47.92.49.26:8080/promise/publish";
     public static final String JOIN_POST = "http://47.92.49.26:8080/promise/join";
@@ -20,6 +21,7 @@ public class URLStore {
     public static final String CANCEL_POST = "http://47.92.49.26:8080/promise/cancel";
     public static final String MY_POST = "http://47.92.49.26:8080/promise/mypromises";
     public static final String NEARBY_POST = "http://47.92.49.26:8080/promise/nearby";
+
 
 
 }

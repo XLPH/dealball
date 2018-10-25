@@ -119,13 +119,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         trans_t_rl.setVisibility(View.VISIBLE);
         mine_attack.setText(String.valueOf(Utility.getMyInfoBean().getAttack()));
         ball_age.setText(String.valueOf(Utility.getMyInfoBean().getBallYear()));
-        if (Utility.getMyInfoBean().getNickname() == null) {
+        if (Utility.getMyInfoBean().getNickName() == null) {
             nickname.setText("YueQiu" + Utility.getUserById());
         } else {
-            nickname.setText(Utility.getMyInfoBean().getNickname());
+            nickname.setText(Utility.getMyInfoBean().getNickName());
         }
-
-        //nickname.setText("我是渣渣");
 
     }
 

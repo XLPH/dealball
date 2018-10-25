@@ -23,12 +23,8 @@ import okhttp3.RequestBody;
 
 public class HttpUtil {
 
-   // private static final HttpUtil instance;
     private OkHttpClient client;
-    private OkHttpClient client1;
     private static String JSESSIONID;
-
-
 
     private ConcurrentHashMap<String,List<Cookie>> cookieStore = new ConcurrentHashMap<>();
 
@@ -52,11 +48,7 @@ public class HttpUtil {
                             JSESSIONID = cookie.value();
 
                         }
-
-
-
                     }
-
                     @Override
                     public List<Cookie> loadForRequest(HttpUrl url) {
                         List<Cookie> cookies = cookieStore.get(url.host());
@@ -71,7 +63,7 @@ public class HttpUtil {
     private static class HttpUtilLoader{
         private static final HttpUtil instance=new HttpUtil();
     }
-    public static HttpUtil getInstance(){
+    private static HttpUtil getInstance(){
         return HttpUtilLoader.instance;
     }
 
@@ -129,9 +121,6 @@ public class HttpUtil {
                     .post(buildBody(params))
                     .addHeader("JESESSIONID",JSESSIONID)
                     .build();
-            System.out.println("******"+request.header(JSESSIONID));
-            //JESESSIONID
-
             getInstance().client.newCall(request).enqueue(callback);
         }
 
@@ -145,6 +134,8 @@ public class HttpUtil {
         getInstance().client.newCall(request).enqueue(callback);
     }
 
+
+
     @RequiresPermission(Manifest.permission.INTERNET)
     public static void myPost(String url, Callback callback) {  //以get方式提交数据
 
@@ -155,8 +146,6 @@ public class HttpUtil {
 
         getInstance().client.newCall(request).enqueue(callback);
     }
-
-
 
     @RequiresPermission(Manifest.permission.INTERNET)
     public static void post(String url, Map<String, String> params, Map<String, File> files, Callback callback) {
@@ -174,7 +163,6 @@ public class HttpUtil {
         }
         return builder.build();
     }
-
     private static RequestBody requestBody(String str1 , String str2){
         FormBody.Builder builder = new FormBody.Builder();
         builder.add("phone",str1);
@@ -182,8 +170,6 @@ public class HttpUtil {
         return builder.build();
 
     }
-
-
     private static RequestBody buildBody(Map<String, String> params, Map<String, File> files) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
@@ -197,4 +183,22 @@ public class HttpUtil {
         return builder.build();
     }
 }
+ /*@RequiresPermission(Manifest.permission.INTERNET)
+    public static void myPost(String url, Map<String, Object> params, Callback callback) {
 
+        Request request = new Request.Builder()
+                .url(url)
+                .post(myBildBody(params))
+                .build();
+
+        getInstance().client.newCall(request).enqueue(callback);
+    }*/
+
+/* private static RequestBody myBildBody(Map<String, Object> params) {
+        FormBody.Builder builder = new FormBody.Builder();
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            System.out.println(entry.getValue());
+            builder.add(entry.getKey(), String.valueOf(entry.getValue()));
+        }
+        return builder.build();
+    }*/

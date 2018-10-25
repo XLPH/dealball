@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">约球</string>
+    <string name="sign">你有FreeStyle吗？</string>
+    <string name="title">请输入签名</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="album">从相册选择</string>
+    <string name="camera">拍照</string>
+
 </resources>
