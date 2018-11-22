@@ -11,5 +11,6 @@
     <color name="button">#e25e3f</color>
     <color name="depress">#e25e3f</color>
     <color name="loading">#cccccc</color>
+    <color name="background">#f9f6f6</color>
     <color name="box_message">#e2dddd</color>
 </resources>

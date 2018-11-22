@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.dealball.main.bean.IsLogged;
+import org.greenrobot.eventbus.EventBus;
 
 import com.example.dealball.R;
 import com.example.dealball.main.HomeActivity;
@@ -100,6 +102,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener ,
 
     @Override
     public void next() {
+        EventBus.getDefault().postSticky(IsLogged.MARK);
         Intent intent= new Intent(this,HomeActivity.class);
         intent.putExtra("page",4);
         startActivity(intent);

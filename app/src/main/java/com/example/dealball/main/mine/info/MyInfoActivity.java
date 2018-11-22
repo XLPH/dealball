@@ -7,10 +7,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +29,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.dealball.R;
 import com.example.dealball.main.utils.DialogUtils;
+import com.example.dealball.main.utils.FileUtils;
 import com.example.dealball.main.utils.ImageUtil;
+import com.example.dealball.main.utils.MyApplication;
+import com.example.dealball.main.utils.RealPathFromUriUtils;
 import com.example.dealball.main.utils.Utility;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.Charset;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,6 +81,7 @@ public class MyInfoActivity extends Activity implements View.OnClickListener, My
     private TextView tv_bd_cancel;
     public static final int TAKE_PHOTO =3;
     public static final int CHOOSE_PHOTO =2;
+    public static final int RESULT_REQUEST_CODE = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +112,13 @@ public class MyInfoActivity extends Activity implements View.OnClickListener, My
         userWeChat = findViewById( R.id.user_we_chat );
         isWeChatBind = findViewById( R.id.is_we_chat_bind );
         presenter = new MyInfoPresenter(this);
-        dialog = new DialogUtils(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, R.layout.bottom_dialog, R.style.BottomDialog, Gravity.BOTTOM, R.style.BottomDialog_Animation);
+        dialog = new DialogUtils.Builder(this).build();
         tv_album = dialog.findViewById(R.id.tv_album);
         tv_camera = dialog.findViewById(R.id.tv_camera);
         tv_bd_cancel = dialog.findViewById(R.id.tv_bd_cancel);
 
-        dialogInput = new DialogUtils(this, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, R.layout.dialog_input, R.style.BottomDialog, Gravity.BOTTOM, R.style.BottomDialog_Animation);
+
+        dialogInput = new DialogUtils.Builder(this).layout(R.layout.dialog_input).build();
         cv_input = dialogInput.findViewById(R.id.cv_input);
         et_message = dialogInput.findViewById(R.id.et_message);
         cancel = dialogInput.findViewById(R.id.cancel);
@@ -149,7 +164,7 @@ public class MyInfoActivity extends Activity implements View.OnClickListener, My
             userSign.setText(Utility.getMyInfoBean().getSignature());
         }
         if(Utility.getMyInfoBean().getAvatar() != null){
-            Glide.with(this).load(ImageUtil.base64StringToByte(Utility.getMyInfoBean().getAvatar())).into(civUserHeader);
+            Glide.with(this).load(ImageUtil.base64StringToByte(Utility.getMyInfoBean().getAvatar())).thumbnail(0.3f).into(civUserHeader);
         }
     }
 
@@ -202,7 +217,7 @@ public class MyInfoActivity extends Activity implements View.OnClickListener, My
     }
 
     private void toAlbum() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,CHOOSE_PHOTO);
         dialog.dismiss();
@@ -213,26 +228,79 @@ public class MyInfoActivity extends Activity implements View.OnClickListener, My
         if(resultCode != RESULT_CANCELED){
             switch (requestCode){
                 case CHOOSE_PHOTO:
-                    Glide.with(this).load(data.getData()).thumbnail(0.1f).into(civUserHeader);
-                    try {
-                        Bitmap bitmap1 = ImageUtil.getBitmapFromUri(data.getData(), this);
-                        byte[] b = "hello world".getBytes();
-                        String s = ImageUtil.byteToBase64String(b);
-                        byte[] b1 = ImageUtil.base64StringToByte(s);
-                        for(byte b2: b1){
-                            System.out.println(b2);
-                        }
+                    String path = RealPathFromUriUtils.getRealPathFromUri(this, data.getData());
+                    System.out.println("path"+ path);
+                    startPhotoZoom(data.getData());
+
+//                    Glide.with(this).load(data.getData()).thumbnail(0.3f).into(civUserHeader);
+                   /* try {
+                        Bitmap bitmap1 = ImageUtil.getBitmapFromUri(data.getData(), this);//160*90bit
+//                        Bitmap bitmap = ImageUtil.scaleBitmap(bitmap1, 30, 30);//马赛克 30*30bit
                         byte[] bytes = ImageUtil.bitmapToBytes(bitmap1);
-                        System.out.println(bytes);
 //                        presenter.getBytes();
                         presenter.updateInfo("avatar", bytes, Utility.getToken());
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                     break;
                 case TAKE_PHOTO:
                     break;
+                case RESULT_REQUEST_CODE:
+                    if(data != null){
+                        setImageToView(data);
+                    }
+
             }
+        }
+    }
+
+    //裁剪图片
+    private void startPhotoZoom(Uri uri){
+        if(uri==null){
+           System.out.println("uri==null");
+            return;
+        }
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri,"image/*");
+        //设置裁剪
+        intent.putExtra("crop","true");
+        //裁剪宽高比例
+        intent.putExtra("aspectX",1);
+        intent.putExtra("aspectY",1);
+        //裁剪图片的质量
+        intent.putExtra("outputX",80);
+        intent.putExtra("outputY",80);
+        //发送数据
+        intent.putExtra("return-data",true);
+        startActivityForResult(intent,RESULT_REQUEST_CODE);
+    }
+
+    //设置图片
+    private void setImageToView(Intent data){
+        Bundle bundle = data.getExtras();
+        if(bundle!=null){
+            Bitmap bitmap = bundle.getParcelable("data");
+            String path = RealPathFromUriUtils.getRealPathFromUri(this, data.getData());
+            System.out.println("path"+ path);
+            File headFile = new File(path);
+            Glide.with(getApplicationContext()).asBitmap().load(headFile).into(civUserHeader);
+            Glide.with(MyApplication.getContext()).asBitmap().load(bitmap).into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    civUserHeader.setImageBitmap(resource);
+
+                }
+            });
+            byte[] bytes = ImageUtil.bitmapToBytes(bitmap);
+            presenter.updateInfo("avatar", bytes, Utility.getToken());
+//            System.out.println("data.getData()"+data.getData());
+//            String path = FileUtils.getFilePathByUri(this, data.getData()); 不可用
+
+            /*String path = data.getData().getPath();
+            System.out.println("path1"+ path);
+
+        */
+//            presenter.updateInfo("avatar", path1, Utility.getToken());
         }
     }
 
@@ -253,7 +321,10 @@ public class MyInfoActivity extends Activity implements View.OnClickListener, My
                     userNickname.setText(msg);
                 }
                 if(updateName.equals("avatar")){
-                     Glide.with(getApplicationContext()).load(ImageUtil.base64StringToByte(Utility.getMyInfoBean().getAvatar())).into(civUserHeader);
+                     Glide.with(getApplicationContext()).load(ImageUtil.base64StringToByte(Utility.getMyInfoBean().getAvatar())).thumbnail(0.3f).into(civUserHeader);
+        /*            File headFile = new File(Utility.getMyInfoBean().getAvatar());
+//                    Uri uri = FileUtils.getImageStreamFromExternal(Utility.getMyInfoBean().getAvatar());
+                    Glide.with(getApplicationContext()).load(headFile).into(civUserHeader);*/
                 }
             }
         });
@@ -285,3 +356,57 @@ public class MyInfoActivity extends Activity implements View.OnClickListener, My
 
     }
 }
+/*byte[] b = "hello world".getBytes();
+                        String s = ImageUtil.byteToBase64String(b);
+                        byte[] b1 = ImageUtil.base64StringToByte(s);
+                        for(byte b2: b1){
+                            System.out.println(b2);
+                        }*/
+   /*
+   ③没有用裁剪之前的方法
+   try {
+                Bitmap bitmap1 = ImageUtil.getBitmapFromUri(data.getData(), this);//160*90bit
+//                        Bitmap bitmap = ImageUtil.scaleBitmap(bitmap1, 30, 30);//马赛克 30*30bit
+                byte[] bytes = ImageUtil.bitmapToBytes(bitmap);
+//                        presenter.getBytes();
+                presenter.updateInfo("avatar", bytes, Utility.getToken());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+
+
+   /* ② bitmap转文件
+   File nf = new File(Environment.getExternalStorageDirectory()+"/Dealball");
+            nf.mkdir();
+                    File f = new File(Environment.getExternalStorageDirectory()+"/Dealball", "avatar.jpg");
+
+                    FileOutputStream out = null;
+                    try {
+                    out = new FileOutputStream(f);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 80, out);
+
+                    try {
+                    out.flush();
+                    out.close();
+                    } catch (IOException e) {
+                    e.printStackTrace();
+                    }
+
+                    } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    }
+
+                    String path1 = nf.getPath();
+                    String p = nf.getAbsolutePath();
+                    System.out.println("path1"+ path1);
+
+                    File headFile = new File(path1);
+//                    Uri uri = FileUtils.getImageStreamFromExternal(Utility.getMyInfoBean().getAvatar());
+                    Glide.with(getApplicationContext()).asBitmap().load(headFile).into(civUserHeader);
+                    Glide.with(MyApplication.getContext()).asBitmap().load(bitmap).into(new SimpleTarget<Bitmap>() {
+@Override
+public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+        civUserHeader.setImageBitmap(resource);
+
+        }
+        });*/

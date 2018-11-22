@@ -25,7 +25,6 @@ public class MyInfoPresenter implements MyInfoContact.Presenter {
             public void success(Bundle bundle) {
                 int code = bundle.getInt("code");
                 MyInfoBean myInfoBean = bundle.getParcelable("myInfoBean");
-                System.out.println(myInfoBean.toString());
                 Utility.setMyInfoBean(myInfoBean);
                 if(code == 0){
                     view.updateMessage(updateName, msg);

@@ -32,6 +32,7 @@ public class HelloPresenter implements HelloContact.Presenter{
                 if(code == 0){
                     Utility.setMyInfoBean(myInfoBean);
                     view.next();
+                    view.showToast("登录成功");
                 }
             }
 
@@ -52,8 +53,6 @@ public class HelloPresenter implements HelloContact.Presenter{
         model.login(phone, password, new Back() {
             @Override
             public void success(@Nullable Bundle bundle) {
-
-                view.showToast("登录成功");
                 int code=bundle.getInt("code");
                 int id=bundle.getInt("id");     //获取登录传过来的用户id，唯一标识用户
                 String token = bundle.getString("token");
@@ -62,7 +61,7 @@ public class HelloPresenter implements HelloContact.Presenter{
                 Utility.setToken(token);
                 if(code==0){        //如果登录成功，把id存储起来
                     Utility.setUserById(id);
-                    LitePal.use(LitePalDB.fromDefault("DealBall" + id));
+//                    LitePal.use(LitePalDB.fromDefault("DealBall"));
                     getUser(id, token);
 
                 }

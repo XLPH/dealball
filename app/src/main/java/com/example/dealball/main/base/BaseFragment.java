@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.example.dealball.main.bean.IsLogged;
+import com.example.dealball.main.bean.IsPromise;
 import com.example.dealball.main.utils.Utility;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +32,7 @@ public abstract class BaseFragment extends Fragment {
     private boolean isReuseView;
     private boolean isFirstVisible;
     private boolean isLog;
+    private static boolean isPost = false;
     private View rootView;
 
 
@@ -110,6 +112,13 @@ public abstract class BaseFragment extends Fragment {
                 isLog = true;
         }
     }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void IsPromiseBus(IsPromise isPromise){
+        if(isPromise.getName() != null){
+            isPost = true;
+
+        }
+    }
 
     @Override
     public void onDestroyView() {
@@ -168,5 +177,12 @@ public abstract class BaseFragment extends Fragment {
 
     protected boolean isFragmentVisible() {
         return isFragmentVisible;
+    }
+
+    protected boolean isPost(){
+        return isPost;
+    }
+    protected boolean isLog(){
+        return isLog;
     }
 }

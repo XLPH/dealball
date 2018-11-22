@@ -6,11 +6,11 @@
     android:background="@drawable/draw">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/my_user_photo"
-        android:padding="10dp"
-        android:layout_width="150dp"
+        android:padding="5dp"
+        android:layout_width="160dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
-        android:src="@drawable/mine_image"
+        android:src="@mipmap/face"
         />
 
     <ImageView
@@ -25,14 +25,15 @@
 
     <TextView
         android:id="@+id/nickname"
-        android:layout_width="wrap_content"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/mine_iv"
         android:layout_alignParentTop="true"
         android:layout_marginTop="12dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="110dp"
+        android:layout_marginRight="100dp"
         android:text="街球王子"
+        android:maxLines="1"
         android:textColor="#000000"
         android:textSize="18sp" />
 
@@ -109,11 +110,11 @@
 
     <TextView
         android:id="@+id/mine_attack"
-        android:layout_width="42dp"
+        android:layout_width="50dp"
         android:layout_height="25dp"
+        android:layout_alignEnd="@+id/address"
+        android:layout_alignRight="@+id/address"
         android:layout_alignTop="@+id/mine_watch"
-        android:layout_toStartOf="@+id/leaf"
-        android:layout_toLeftOf="@+id/leaf"
         android:text="0"
         android:textColor="#000000"
         android:textSize="18sp" />

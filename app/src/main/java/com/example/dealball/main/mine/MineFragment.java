@@ -11,20 +11,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.dealball.R;
 import com.example.dealball.main.base.BaseFragment;
 import com.example.dealball.main.bean.IsLogged;
 import com.example.dealball.main.hello.LoginBYActivity;
 import com.example.dealball.main.mine.info.MyInfoActivity;
+import com.example.dealball.main.mine.settings.SettingsActivity;
+import com.example.dealball.main.utils.ImageUtil;
 import com.example.dealball.main.utils.Utility;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,6 +41,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private RelativeLayout trans_rl;
     private View mineView;
     private TextView title;
+    private ImageView setting;
     private TabLayout mine_tab;
     private ViewPager mine_viewpager;
 
@@ -46,6 +53,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private RelativeLayout add_friends_el;
     private RelativeLayout new_deal_el;
     private RelativeLayout news_el;
+
+
 
     private static final String TAG = MineFragment.class.getSimpleName();
 
@@ -68,11 +77,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         add_friends_el.setOnClickListener(this);
         new_deal_el.setOnClickListener(this);
         news_el.setOnClickListener(this);
+        setting.setOnClickListener(this);
 
     }
 
     private void initData() {
         title.setText("我的");
+        setting.setVisibility(View.VISIBLE);
         mine_viewpager.setAdapter(new MineTabAdapter(getChildFragmentManager()));
         mine_tab.setupWithViewPager(mine_viewpager);
 
@@ -80,6 +91,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     private void initView() {
         title = mineView.findViewById(R.id.tv_title);
+        setting = mineView.findViewById(R.id.setting);
         choose_login = mineView.findViewById(R.id.choose_login);
 
         trans_t_rl = mineView.findViewById(R.id.trans_t_rl);
@@ -100,6 +112,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Intent intent2;
         switch (view.getId()) {
             case R.id.choose_login:
                 Intent intent = new Intent(getActivity(), LoginBYActivity.class);
@@ -108,6 +121,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.my_user_photo:
                 Intent intent1 = new Intent(getActivity(), MyInfoActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.setting:
+                intent2 = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent2);
                 break;
 
         }
@@ -124,6 +141,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         } else {
             nickname.setText(Utility.getMyInfoBean().getNickName());
         }
+        if(Utility.getMyInfoBean().getAvatar() != null){
+         /*   File headFile = new File(Utility.getMyInfoBean().getAvatar());
+            Glide.with(this).load(headFile).into(my_user_photo);*/
+            Glide.with(this).load(ImageUtil.base64StringToByte(Utility.getMyInfoBean().getAvatar())).into(my_user_photo);
+        }
 
     }
 
@@ -132,10 +154,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         notifyDataSetChanged();
     }
 
-    @Override
-    protected void onFragmentFirstVisible() {
-        Toast.makeText(getContext(), "首次可见", Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    protected void onFragmentFirstVisible() {
+//        Toast.makeText(getContext(), "首次可见", Toast.LENGTH_SHORT).show();
+//    }
 
 }
 

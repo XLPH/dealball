@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import org.litepal.LitePal;
+import org.litepal.LitePalDB;
 
 public class MyApplication extends Application { //     定制自己的Application类，管理程序内一些全局的状态信息，比如说获取Context对象
 
@@ -14,6 +15,7 @@ public class MyApplication extends Application { //     定制自己的Applicati
         super.onCreate();
         context = getApplicationContext();
         LitePal.initialize(this);
+        LitePal.use(LitePalDB.fromDefault("DealBall"));
 
     }
 

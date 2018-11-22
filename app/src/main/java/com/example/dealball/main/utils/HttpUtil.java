@@ -3,10 +3,13 @@ package com.example.dealball.main.utils;
 import android.Manifest;
 import android.support.annotation.RequiresPermission;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -155,6 +158,31 @@ public class HttpUtil {
                 .build();
         getInstance().client.newCall(request).enqueue(callback);
     }
+    @RequiresPermission(Manifest.permission.INTERNET)
+    public static void myPost(String url, Map<String, Object> params, Callback callback) {
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(myBildBody(params))
+                .build();
+
+        getInstance().client.newCall(request).enqueue(callback);
+    }
+
+   private static RequestBody myBildBody(Map<String, Object> params) {
+//        FormBody.Builder builder = new FormBody.Builder();
+       Gson gson = new Gson();
+       String p = gson.toJson(params);
+       MediaType m = MediaType.parse("application/json; charset=utf-8");
+       RequestBody body = RequestBody.create(m, p);
+       return body;
+//       Set set = params.keySet();
+//        for(Object obj : set){
+////            builder.add(obj, params.get(obj));
+//
+//        }
+//        return builder.build();
+    }
 
     private static RequestBody buildBody(Map<String, String> params) {
         FormBody.Builder builder = new FormBody.Builder();
@@ -168,7 +196,6 @@ public class HttpUtil {
         builder.add("phone",str1);
         builder.add("password",str2);
         return builder.build();
-
     }
     private static RequestBody buildBody(Map<String, String> params, Map<String, File> files) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -183,22 +210,3 @@ public class HttpUtil {
         return builder.build();
     }
 }
- /*@RequiresPermission(Manifest.permission.INTERNET)
-    public static void myPost(String url, Map<String, Object> params, Callback callback) {
-
-        Request request = new Request.Builder()
-                .url(url)
-                .post(myBildBody(params))
-                .build();
-
-        getInstance().client.newCall(request).enqueue(callback);
-    }*/
-
-/* private static RequestBody myBildBody(Map<String, Object> params) {
-        FormBody.Builder builder = new FormBody.Builder();
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            System.out.println(entry.getValue());
-            builder.add(entry.getKey(), String.valueOf(entry.getValue()));
-        }
-        return builder.build();
-    }*/

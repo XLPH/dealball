@@ -4,5 +4,7 @@
     <version value = "1"> </version>
     <list>
         <mapping class = "com.example.dealball.main.bean.MyInfoBean"> </mapping>
+        <mapping class = "com.example.dealball.main.bean.Promise"> </mapping>
+        <mapping class = "com.example.dealball.main.bean.PostBean"> </mapping>
     </list>
 </litepal>

@@ -6,9 +6,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
+import android.view.View;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,7 +49,7 @@ public class ImageUtil {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inDither = true;
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
         BitmapFactory.decodeStream(inputStream, null, options);
         inputStream.close();
         int originalWidth = options.outWidth;
@@ -53,8 +58,8 @@ public class ImageUtil {
             return null;
         }
 
-        float height = 150f;
-        float width = 150f;
+        float height = 100f;
+        float width = 100f;
         int be = 1; //be=1表示不缩放
         if (originalWidth > originalHeight && originalWidth > width) {
             be = (int) (originalWidth / width);
@@ -69,7 +74,7 @@ public class ImageUtil {
         options1.inSampleSize = be;
         options1.inDither = true;
         options.inJustDecodeBounds = false;
-        options1.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        options1.inPreferredConfig = Bitmap.Config.RGB_565;
         inputStream = activity.getContentResolver().openInputStream(uri);
 
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options1);
@@ -77,6 +82,7 @@ public class ImageUtil {
 
         return compressImage(bitmap);
     }
+
 
     public static Bitmap scaleBitmap(Bitmap origin, int newWidth, int newHeight) {
         if (origin == null) {
@@ -129,4 +135,105 @@ public class ImageUtil {
     public static String byteToBase64String(byte[] bytes){
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
+
+    public static File getFileFromBytes(byte[] b, String outputFile) {
+        BufferedOutputStream stream = null;
+        File file = null;
+        try {
+            file = new File(outputFile);
+            FileOutputStream fos = new FileOutputStream(file);
+            stream = new BufferedOutputStream(fos);
+            stream.write(b);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return file;
+    }
+
+    /**
+     * 把View绘制到Bitmap上
+     * @param view 需要绘制的View
+     * @param width 该View的宽度
+     * @param height 该View的高度
+     * @return 返回Bitmap对象
+     * add by csj 13-11-6
+     */
+    public static Bitmap getViewBitmap1(View comBitmap, int width, int height) {
+        Bitmap bitmap = null;
+        if (comBitmap != null) {
+            comBitmap.clearFocus();
+            comBitmap.setPressed(false);
+
+            boolean willNotCache = comBitmap.willNotCacheDrawing();
+            comBitmap.setWillNotCacheDrawing(false);
+
+            // Reset the drawing cache background color to fully transparent
+            // for the duration of this operation
+            int color = comBitmap.getDrawingCacheBackgroundColor();
+            comBitmap.setDrawingCacheBackgroundColor(0);
+            float alpha = comBitmap.getAlpha();
+            comBitmap.setAlpha(1.0f);
+
+            if (color != 0) {
+                comBitmap.destroyDrawingCache();
+            }
+
+            int widthSpec = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
+            int heightSpec = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
+            comBitmap.measure(widthSpec, heightSpec);
+            comBitmap.layout(0, 0, width, height);
+
+            comBitmap.buildDrawingCache();
+            Bitmap cacheBitmap = comBitmap.getDrawingCache();
+            if (cacheBitmap == null) {
+                Log.e("view.ProcessImageToBlur", "failed getViewBitmap(" + comBitmap + ")",
+                        new RuntimeException());
+                return null;
+            }
+            bitmap = Bitmap.createBitmap(cacheBitmap);
+            // Restore the view
+            comBitmap.setAlpha(alpha);
+            comBitmap.destroyDrawingCache();
+            comBitmap.setWillNotCacheDrawing(willNotCache);
+            comBitmap.setDrawingCacheBackgroundColor(color);
+        }
+        return bitmap;
+    }
+
+    /**
+     * 将View转换成Bitmap
+     *
+     * @param
+     * @return
+     */
+
+    public static Bitmap getViewBitmap(View addViewContent) {
+
+        addViewContent.setDrawingCacheEnabled(true);
+
+        addViewContent.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        addViewContent.layout(0, 0,
+                addViewContent.getMeasuredWidth(),
+                addViewContent.getMeasuredHeight());
+
+        addViewContent.buildDrawingCache();
+        Bitmap cacheBitmap = addViewContent.getDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+
+        return bitmap;
+    }
+
+
 }
+
+

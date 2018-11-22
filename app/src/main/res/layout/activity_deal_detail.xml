@@ -22,6 +22,7 @@
             android:layout_height="140dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_deal_head"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:layout_width="100dp"
@@ -44,6 +45,7 @@
                     android:textSize="16dp"
                     />
                 <TextView
+                    android:id="@+id/tv_deal_nick"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -101,6 +103,7 @@
                         android:textSize="16dp"
                         />
                     <TextView
+                        android:id="@+id/tv_deal_time"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -111,6 +114,7 @@
                 </LinearLayout>
 
                 <View
+
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
                     android:layout_width="match_parent"
@@ -119,6 +123,7 @@
                     android:background="@color/box_message"/>
 
                 <LinearLayout
+
                     android:padding="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="30dp">
@@ -133,6 +138,7 @@
                         android:textSize="16dp"
                         />
                     <TextView
+                        android:id="@+id/tv_deal_address"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -165,6 +171,7 @@
                         android:textSize="16dp"
                         />
                     <TextView
+                        android:id="@+id/tv_deal_ball"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -196,6 +203,7 @@
                         android:textSize="16dp"
                         />
                     <TextView
+                        android:id="@+id/tv_deal_capacity"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -227,6 +235,7 @@
                         android:textSize="16dp"
                         />
                     <TextView
+                        android:id="@+id/tv_deal_now_number"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -264,6 +273,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_deal_remark"
                     android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

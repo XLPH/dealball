@@ -6,53 +6,54 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.LinearLayout;
 import com.example.dealball.R;
 
 public class LoginBYActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView phone_tv;
-    private TextView we_chat_tv;
-    private TextView tencent_qq_tv;
-    private ImageView iv_back;
+
+    private ImageView by_back;
+    private LinearLayout ll_phone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_by);
+        setContentView(R.layout.activity_login_by);
 
         TextView tv_title=findViewById(R.id.tv_title);
         tv_title.setText("登录");
 
         initView();
+        initData();
         initEvent();
 
 
     }
     public void initView(){
-        phone_tv = findViewById(R.id.phone_tv);
-        we_chat_tv = findViewById(R.id.we_chat_tv);
-        tencent_qq_tv = findViewById(R.id.tencent_qq_tv);
-        iv_back = findViewById(R.id.iv_back);
+       ll_phone = findViewById(R.id.ll_phone);
+        by_back = findViewById(R.id.by_back);
     }
+
+    public void initData(){
+        by_back.setVisibility(View.VISIBLE);
+
+    }
+
     public void initEvent(){
-        phone_tv.setOnClickListener(this);
-        we_chat_tv.setOnClickListener(this);
-        tencent_qq_tv.setOnClickListener(this);
-        iv_back.setOnClickListener(this);
+        ll_phone.setOnClickListener(this);
+        by_back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.phone_tv:
+            case R.id.ll_phone:
                 Intent intent = new Intent(this,LoginActivity.class);
                 startActivity(intent);
                 finish();
-            case R.id.iv_back:
+            case R.id.by_back:
                 finish();
-            case R.id.we_chat_tv:
                 break;
-            case R.id.tencent_qq_tv:
-                break;
+
 
         }
     }

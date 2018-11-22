@@ -1,14 +1,13 @@
 package com.example.dealball.main.bean;
 
-public enum IsLogged {
+public enum IsPromise {
+    PROMISE("isPromise");
 
-    MARK("isLogged");
     private final String name;
 
-    IsLogged(String name){
+    private IsPromise(String name){
         this.name = name;
     }
-
     public String getName() {
         return name;
     }

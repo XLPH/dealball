@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.dealball.R;
 import com.example.dealball.main.HomeActivity;
 import com.example.dealball.main.bean.IsLogged;
+import com.example.dealball.main.mine.settings.SettingsActivity;
 import com.example.dealball.main.utils.Utility;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText password_et;
     private Button login;
     private ImageView arrow;
+    private TextView forget_password;
     private RelativeLayout rl_loading;
     private HelloContact.Presenter presenter;
     @Override
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     private void initView() {
         register = findViewById(R.id.register);
+        forget_password = findViewById(R.id.forget_password);
         phone_number_et = findViewById(R.id.phone_number_et);
         password_et = findViewById(R.id.password_et);
         login = findViewById(R.id.login);
@@ -54,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register.setOnClickListener(this);
         login.setOnClickListener(this);
         arrow.setOnClickListener(this);
+        forget_password.setOnClickListener(this);
     }
 
     @Override
@@ -74,6 +78,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
             case R.id.arrow:
                 finish();
+                case R.id.forget_password:
+                    break;
         }
     }
 
@@ -85,6 +91,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent intent= new Intent(this,HomeActivity.class);
         intent.putExtra("page",4);
         startActivity(intent);
+        /*Intent[] intents = new Intent[2];
+        intents[0] = new Intent(this,HomeActivity.class);
+        intents[1] = new Intent(this, SettingsActivity.class);
+        intents[0].putExtra("page",4);
+        startActivities(intents);*/
         finish();
 
     }

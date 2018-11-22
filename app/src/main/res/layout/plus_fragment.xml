@@ -186,6 +186,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/pop_rl_click"
         android:layout_width="wrap_content"
         android:layout_height="55dp"

@@ -50,7 +50,7 @@
             android:layout_marginRight="50dp"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:src="@mipmap/boy_user"
+            android:src="@mipmap/face"
             />
 
         <ImageView

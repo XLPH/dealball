@@ -219,8 +219,10 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_exit"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
         <Button
             android:id="@+id/bt_exit"
             android:textColor="@color/colorText"
